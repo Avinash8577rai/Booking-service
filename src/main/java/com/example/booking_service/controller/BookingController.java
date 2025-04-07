@@ -2,7 +2,9 @@ package com.example.booking_service.controller;
 
 import com.example.booking_service.entity.Booking;
 import com.example.booking_service.entity.BookingResponse;
+import com.example.booking_service.entity.StripeResponse;
 import com.example.booking_service.service.BookingService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/bookings")
+@Tag(name = "Booking Controller", description = "Handles booking requests")
 public class BookingController {
 
     @Autowired
@@ -20,8 +23,8 @@ public class BookingController {
     @PostMapping("/book")
     public ResponseEntity<?> bookFlight(@RequestBody Booking booking) {
         try {
-            BookingResponse newBooking = bookingService.bookFlight(booking);
-            return ResponseEntity.ok(newBooking);
+            StripeResponse paymentResponse = bookingService.bookFlight(booking);
+            return ResponseEntity.ok(paymentResponse);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

@@ -20,6 +20,6 @@ public interface FlightServiceFeign {
     void cancelSeat(@RequestParam Long flightId,
                     @RequestParam String seatNumber, @RequestHeader("Authorization") String authHeader);
 
-    @GetMapping("flights/getDetails")
+    @GetMapping("/flights/getDetails")
     FlightDetails getFlightDetails(@RequestParam Long flightId, @RequestHeader("Authorization") String authHeader);
 }
